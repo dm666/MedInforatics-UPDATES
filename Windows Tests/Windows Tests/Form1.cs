@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML;
+using ClosedXML.Excel;
+using ClosedXML.Excel.Misc;
 
 namespace Windows_Tests
 {

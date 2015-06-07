@@ -1,1 +1,12 @@
 D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\bin\Debug\Windows Tests.exe.config
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\bin\Debug\Windows Tests.exe
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\bin\Debug\Windows Tests.pdb
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\bin\Debug\ClosedXML.dll
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\bin\Debug\DocumentFormat.OpenXml.dll
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\bin\Debug\ClosedXML.xml
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\obj\Debug\Windows Tests.csprojResolveAssemblyReference.cache
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\obj\Debug\Windows_Tests.Form1.resources
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\obj\Debug\Windows_Tests.Properties.Resources.resources
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\obj\Debug\Windows Tests.csproj.GenerateResource.Cache
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\obj\Debug\Windows Tests.exe
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\obj\Debug\Windows Tests.pdb
