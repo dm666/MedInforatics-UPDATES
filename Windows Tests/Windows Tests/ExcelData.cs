@@ -34,7 +34,7 @@ namespace Windows_Tests
             book = new XLWorkbook(excel);
         }
 
-        public void NextQuest(int questId)
+        public void NextQuest(int questId, Form workspace)
         {
             AnswerList = new List<string>();
             List<string> allData = new List<string>();
@@ -55,40 +55,38 @@ namespace Windows_Tests
             }
 
             // now get each element
-            // first - quest type
-            IntQuestType = int.Parse(allData[0]);
+            // first - quest 
+            Quest = allData[0];
 
-            // set Quest Type from Enum
+            // get correct answer
+            CorrectAnswer = allData[allData.Count - 3];
+
+            // get quest type 
+            IntQuestType = int.Parse(allData[allData.Count - 2]);
+
+            // convert int type to QuestType
             switch (IntQuestType)
             {
-                case 1: // single
+                case 1:
                     Qtype = QuestType.Single;
-                    CorrectedCount = 1;
                     break;
-                case 2: // multiple
+                case 2:
                     Qtype = QuestType.Multiple;
-                    CorrectedCount = int.Parse(allData[allData.Count - 1]);
                     break;
-                default: // default single
+                default:
                     Qtype = QuestType.Single;
                     break;
             }
 
-            // second - quest
-            Quest = allData[1];
-
-            // get correct answer(last element)
-            CorrectAnswer = allData[allData.Count - 2];
+            // get corrected answers
+            CorrectedCount = int.Parse(allData[allData.Count - 1]);
 
             // now get answer's
-            // remove quest type
+            // remove quest value
             allData.RemoveAt(0);
 
-            // remove quest value
-            allData.RemoveAt(1);
-
-            // remove correctedCount and correct answer
-            allData.RemoveRange(allData.Count - 2, 2);
+            // remove questType, correctedCount and correct answer
+            allData.RemoveRange(allData.Count - 3, 3);
 
             // then fill answer list
             AnswerList = allData;
@@ -96,8 +94,13 @@ namespace Windows_Tests
             // to be continue..
         }
 
-        private void BuildWorkspace(Form owner, string quest, string correct, List<string> answers)
+        private void BuildWorkspace(Form workspace, string quest, string correct, List<string> answers)
         {
+            ClearLabel(workspace);
+            ClearGroupBox(workspace);
+            ClearCheckedListBox(workspace);
+            ClearRadioButton(workspace);
+
             int count = answers.Count;
 
             // main build
@@ -139,7 +142,7 @@ namespace Windows_Tests
                     radio[i].Text = answers[i];
                 }
 
-                owner.Controls.Add(groupBox1);
+                workspace.Controls.Add(groupBox1);
             }
             else if (Qtype == QuestType.Multiple)
             {
@@ -147,7 +150,58 @@ namespace Windows_Tests
                 multiple.Items.AddRange(answers.ToArray());
                 multiple.Location = new System.Drawing.Point(1, 59);
 
-                owner.Controls.Add(multiple);
+                workspace.Controls.Add(multiple);
+            }
+
+            workspace.Controls.Add(labelQuest);
+        }
+
+        private void ClearLabel(Form owner)
+        {
+            foreach (Control c in owner.Controls)
+            {
+                if (c.GetType() == typeof(Label))
+                {
+                    c.Dispose();
+                    owner.Controls.Remove(c);
+                }
+            }
+
+        }
+
+        private void ClearCheckedListBox(Form owner)
+        {
+            foreach (Control c in owner.Controls)
+            {
+                if (c.GetType() == typeof(CheckedListBox))
+                {
+                    c.Dispose();
+                    owner.Controls.Remove(c);
+                }
+            }
+        }
+
+        private void ClearRadioButton(Form owner)
+        {
+            foreach (Control c in owner.Controls)
+            {
+                if (c.GetType() == typeof(RadioButton))
+                {
+                    c.Dispose();
+                    owner.Controls.Remove(c);
+                }
+            }
+        }
+
+        private void ClearGroupBox(Form owner)
+        {
+            foreach (Control c in owner.Controls)
+            {
+                if (c.GetType() == typeof(GroupBox))
+                {
+                    c.Dispose();
+                    owner.Controls.Remove(c);
+                }
             }
         }
 
