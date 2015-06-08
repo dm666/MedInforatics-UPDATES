@@ -25,6 +25,22 @@ namespace Windows_Tests
         private int CorrectedCount;
         private List<string> AnswerList;
         private int IntQuestType;
+        private ExcelFile ExcelData;
+
+        public Dictionary<int, ExcelFile> ExcelFileMgr;
+
+        public class ExcelFile
+        {
+            public ExcelFile()
+            {
+                response = new List<string>();
+            }
+
+            public string quest, correct;
+            public QuestType QueType;
+            public List<string> response;
+            public int NumberOfCorrect;
+        }
 
         public ExcelData(string excel)
         {
@@ -34,86 +50,113 @@ namespace Windows_Tests
             book = new XLWorkbook(excel);
         }
 
-        public void NextQuest(int questId, Form workspace)
+        public void LoadingQuestions(TreeView tree)
         {
-            AnswerList = new List<string>();
-            List<string> allData = new List<string>();
-
-            // get list of data
-            var worksheet = book.Worksheet(1); // always 1 list!
-
-            // get row by id
-            var row = worksheet.Row(questId);
-
-            // get all data from excel 
-            for (int i = 1; i < row.CellCount(); i++)
+            DirectoryInfo root = new DirectoryInfo(@"Data\");
+            DirectoryInfo[] files = root.GetDirectories();
+            FileInfo[] info;
+            for (int i = 0; i < files.Length; i++)
             {
-                if (row.Cell(i).IsEmpty())
-                    continue;
+                tree.Nodes.Add(files[i].Name);
+                info = files[i].GetFiles();
 
-                allData.Add(row.Cell(i).Value.ToString());
+                for (int z = 0; z < info.Length; z++)
+                    tree.Nodes[i].Nodes.Add(info[z].Name.Substring(0, info[z].Name.Length - Path.GetExtension(info[z].Name).Length));
             }
-
-            // now get each element
-            // first - quest 
-            Quest = allData[0];
-
-            // get correct answer
-            CorrectAnswer = allData[allData.Count - 3];
-
-            // get quest type 
-            IntQuestType = int.Parse(allData[allData.Count - 2]);
-
-            // convert int type to QuestType
-            switch (IntQuestType)
-            {
-                case 1:
-                    Qtype = QuestType.Single;
-                    break;
-                case 2:
-                    Qtype = QuestType.Multiple;
-                    break;
-                default:
-                    Qtype = QuestType.Single;
-                    break;
-            }
-
-            // get corrected answers
-            CorrectedCount = int.Parse(allData[allData.Count - 1]);
-
-            // now get answer's
-            // remove quest value
-            allData.RemoveAt(0);
-
-            // remove questType, correctedCount and correct answer
-            allData.RemoveRange(allData.Count - 3, 3);
-
-            // then fill answer list
-            AnswerList = allData;
-
-            // to be continue..
         }
 
-        private void BuildWorkspace(Form workspace, string quest, string correct, List<string> answers)
+        public void LoadingQuery(string file)
         {
+            if (!File.Exists(file))
+                throw new Exception("File not found!");
+
+            ExcelFileMgr = new Dictionary<int, ExcelFile>();
+            List<string> intermediateData = new List<string>();
+
+            var workbook = new XLWorkbook(file);
+            var worksheet = workbook.Worksheet(1);
+
+            for (int counter = 1; counter <= worksheet.Rows().Count(); counter++)
+            {
+                ExcelData = new ExcelFile();
+
+                var row = worksheet.Row(counter);
+
+                for (int i = 0; i < row.CellCount(); i++)
+                {
+                    if (row.Cell(i).IsEmpty())
+                        continue;
+
+                   intermediateData.Add(row.Cell(i).Value.ToString());
+                }
+
+                ExcelData.quest = intermediateData[0];
+
+                // get correct answer
+                ExcelData.correct = intermediateData[intermediateData.Count - 3];
+
+                // get quest type 
+                IntQuestType = int.Parse(intermediateData[intermediateData.Count - 2]);
+
+                // convert int type to QuestType
+                switch (IntQuestType)
+                {
+                    case 1:
+                        ExcelData.QueType = QuestType.Single;
+                        break;
+                    case 2:
+                        ExcelData.QueType = QuestType.Multiple;
+                        break;
+                    default:
+                        ExcelData.QueType = QuestType.Single;
+                        break;
+                }
+
+                // get corrected answers
+                ExcelData.NumberOfCorrect = int.Parse(intermediateData[intermediateData.Count - 1]);
+
+                // now get answer's
+                // remove quest value
+                intermediateData.RemoveAt(0);
+
+                // remove questType, correctedCount and correct answer
+                intermediateData.RemoveRange(intermediateData.Count - 3, 3);
+
+                // get random 
+                var rand = new Random();
+
+                // then fill answer list random
+                ExcelData.response = intermediateData.OrderBy(sort => rand.Next()).ToList();
+
+                // add data of each quest to collection
+                ExcelFileMgr.Add(counter, ExcelData);
+            }
+        }
+
+        public void NextQuest(int rowId, Form workspace)
+        {
+            if (!ExcelFileMgr.ContainsKey(rowId))
+                throw new Exception("Row not found!");
+
             ClearLabel(workspace);
             ClearGroupBox(workspace);
             ClearCheckedListBox(workspace);
             ClearRadioButton(workspace);
 
-            int count = answers.Count;
+            int count = ExcelFileMgr[rowId].response.Count;
+            QuestType cast = ExcelFileMgr[rowId].QueType;
 
             // main build
             Label labelQuest = new Label();
 
-            labelQuest.Text = quest;
+            labelQuest.Text = ExcelFileMgr[rowId].quest;
             labelQuest.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             labelQuest.Location = new System.Drawing.Point(0, 0);
             labelQuest.Name = "labelQuest";
             labelQuest.Size = new System.Drawing.Size(388, 56);
             labelQuest.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
-            if (Qtype == QuestType.Single)
+            if (cast == QuestType.Single)
             {
                 GroupBox groupBox1 = new GroupBox();
 
@@ -139,15 +182,15 @@ namespace Windows_Tests
                     radio[i].Size = new System.Drawing.Size(85, 17);
                     radio[i].TabIndex = 0;
                     radio[i].TabStop = true;
-                    radio[i].Text = answers[i];
+                    radio[i].Text = ExcelFileMgr[rowId].response[i];
                 }
 
                 workspace.Controls.Add(groupBox1);
             }
-            else if (Qtype == QuestType.Multiple)
+            else if (cast == QuestType.Multiple)
             {
                 CheckedListBox multiple = new CheckedListBox();
-                multiple.Items.AddRange(answers.ToArray());
+                multiple.Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
                 multiple.Location = new System.Drawing.Point(1, 59);
 
                 workspace.Controls.Add(multiple);
