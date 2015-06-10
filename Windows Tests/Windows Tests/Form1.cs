@@ -26,18 +26,9 @@ namespace Windows_Tests
             ExcelData data = new ExcelData();
             data.LoadingQuery(@"C:\users\dm666\desktop\nick.xlsx");
 
-            using (StreamWriter wr = File.AppendText(@"C:\users\dm666\desktop\dawd.txt"))
-            {
-                wr.WriteLine(data.ExcelFileMgr[1].quest);
-                wr.WriteLine(data.ExcelFileMgr[1].NumberOfCorrect);
-                wr.WriteLine(data.ExcelFileMgr[1].QueType);
-
-                for(int i = 0; i < data.ExcelFileMgr[1].response.Count; i++)
-                    wr.WriteLine(data.ExcelFileMgr[1].response[i]);
-
-                for(int i = 0; i < data.ExcelFileMgr[1].correct.Count; i++)
-                    wr.WriteLine(data.ExcelFileMgr[1].correct[i]);
-            }
+            MessageBox.Show(data.ShowCurrentQuest(1));
+            MessageBox.Show(data.ShowCurrentQuest(2));
+            MessageBox.Show(data.ShowCurrentQuest(3));
         }
     }
 }

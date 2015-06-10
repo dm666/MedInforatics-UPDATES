@@ -46,7 +46,7 @@ namespace Windows_Tests
             public int NumberOfCorrect;
         }
 
-        public QuestType Qtype;
+        public QuestType QType;
 
         public ExcelData()
         {
@@ -73,18 +73,22 @@ namespace Windows_Tests
                 throw new Exception("File not found!");
 
             ExcelFileMgr = new Dictionary<int, ExcelFile>();
-            List<string> intermediateData = new List<string>();
 
             var workbook = new XLWorkbook(file);
             var worksheet = workbook.Worksheet(1);
 
-            for (int counter = 1; counter < worksheet.Rows().Count(); counter++)
+            for (int counter = 1; counter <= worksheet.Rows().Count(); counter++)
             {
                 _ExcelData = new ExcelFile();
+                List<string> intermediateData = new List<string>();
+                IntQuestType = 0;
 
                 var row = worksheet.Row(counter);
 
-                for (int i = 1; i < row.CellCount(); i++)
+                if (row.IsEmpty())
+                    continue;
+
+                for (int i = 1; i <= row.Cells().Count(); i++)
                 {
                     if (row.Cell(i).IsEmpty())
                         continue;
@@ -123,8 +127,8 @@ namespace Windows_Tests
                     for (int i = LastIndex - 1; i >= (LastIndex - _ExcelData.NumberOfCorrect); i--)
                         _ExcelData.correct.Add(intermediateData[i]);
                 }
-                else
-                    _ExcelData.correct.Add(intermediateData[LastIndex]);
+                else if (_ExcelData.QueType == QuestType.Single) 
+                    _ExcelData.correct.Add(intermediateData[LastIndex - 1]);
 
                 // remove questType, correctedCount and correct answer
                 intermediateData.RemoveRange(intermediateData.Count - (_ExcelData.NumberOfCorrect + 2), _ExcelData.NumberOfCorrect + 2 );
@@ -141,6 +145,24 @@ namespace Windows_Tests
                 // add data of each quest to collection
                 ExcelFileMgr.Add(counter, _ExcelData);
             }
+        }
+
+        public string ShowCurrentQuest(int id)
+        {
+            if (!ExcelFileMgr.ContainsKey(id))
+                return string.Empty;
+
+            string cor = "";
+            string an = "";
+
+            for (int i = 0; i < ExcelFileMgr[id].correct.Count; i++)
+                cor += ", " + ExcelFileMgr[id].correct[i];
+
+            for (int i = 0; i < ExcelFileMgr[id].response.Count; i++)
+                an += ", " + ExcelFileMgr[id].response[i];
+
+            return string.Format("Quest: {0}\r\nType: {1}\r\nCorrectedCount: {2}\r\nCorrect: {3}\r\nAnswers: {4}\r\n",
+                ExcelFileMgr[id].quest, ExcelFileMgr[id].QueType, ExcelFileMgr[id].NumberOfCorrect, cor, an);
         }
 
 		// all = 3; (all - not correct) / all
