@@ -13,7 +13,7 @@ namespace Windows_Tests
 {
     public class ExcelData
     {
-        enum QuestType
+        public enum QuestType
         {
             Single = 1,
             Multiple,
@@ -21,33 +21,35 @@ namespace Windows_Tests
 
         private XLWorkbook book;
         private string Quest, CorrectAnswer;
-        private QuestType Qtype;
+        
         private int CorrectedCount;
         private List<string> AnswerList;
         private int IntQuestType;
-        private ExcelFile ExcelData;
+        private ExcelFile _ExcelData;
 
         public Dictionary<int, ExcelFile> ExcelFileMgr;
+        public CheckedListBox multiple;
+        public RadioButton[] radio;
 
         public class ExcelFile
         {
             public ExcelFile()
             {
                 response = new List<string>();
+                correct = new List<string>();
             }
 
-            public string quest, correct;
+            public string quest;
+            public List<string> correct;
             public QuestType QueType;
             public List<string> response;
             public int NumberOfCorrect;
         }
 
-        public ExcelData(string excel)
-        {
-            if (!File.Exists(excel))
-                throw new Exception("Файл не найден.");
+        public QuestType Qtype;
 
-            book = new XLWorkbook(excel);
+        public ExcelData()
+        {
         }
 
         public void LoadingQuestions(TreeView tree)
@@ -76,24 +78,24 @@ namespace Windows_Tests
             var workbook = new XLWorkbook(file);
             var worksheet = workbook.Worksheet(1);
 
-            for (int counter = 1; counter <= worksheet.Rows().Count(); counter++)
+            for (int counter = 1; counter < worksheet.Rows().Count(); counter++)
             {
-                ExcelData = new ExcelFile();
+                _ExcelData = new ExcelFile();
 
                 var row = worksheet.Row(counter);
 
-                for (int i = 0; i < row.CellCount(); i++)
+                for (int i = 1; i < row.CellCount(); i++)
                 {
                     if (row.Cell(i).IsEmpty())
                         continue;
 
-                   intermediateData.Add(row.Cell(i).Value.ToString());
+                    intermediateData.Add(row.Cell(i).Value.ToString());
                 }
 
-                ExcelData.quest = intermediateData[0];
+                _ExcelData.quest = intermediateData[0];
 
-                // get correct answer
-                ExcelData.correct = intermediateData[intermediateData.Count - 3];
+                //get number of correct answer's
+                _ExcelData.NumberOfCorrect = int.Parse(intermediateData[intermediateData.Count - 1]);
 
                 // get quest type 
                 IntQuestType = int.Parse(intermediateData[intermediateData.Count - 2]);
@@ -102,37 +104,46 @@ namespace Windows_Tests
                 switch (IntQuestType)
                 {
                     case 1:
-                        ExcelData.QueType = QuestType.Single;
+                        _ExcelData.QueType = QuestType.Single;
                         break;
                     case 2:
-                        ExcelData.QueType = QuestType.Multiple;
+                        _ExcelData.QueType = QuestType.Multiple;
                         break;
                     default:
-                        ExcelData.QueType = QuestType.Single;
+                        _ExcelData.QueType = QuestType.Single;
                         break;
                 }
 
-                // get corrected answers
-                ExcelData.NumberOfCorrect = int.Parse(intermediateData[intermediateData.Count - 1]);
+                // get index of last correct
+                int LastIndex = intermediateData.Count - 2;
 
-                // now get answer's
-                // remove quest value
-                intermediateData.RemoveAt(0);
+                // get correct answer
+                if (_ExcelData.QueType == QuestType.Multiple)
+                {
+                    for (int i = LastIndex - 1; i >= (LastIndex - _ExcelData.NumberOfCorrect); i--)
+                        _ExcelData.correct.Add(intermediateData[i]);
+                }
+                else
+                    _ExcelData.correct.Add(intermediateData[LastIndex]);
 
                 // remove questType, correctedCount and correct answer
-                intermediateData.RemoveRange(intermediateData.Count - 3, 3);
+                intermediateData.RemoveRange(intermediateData.Count - (_ExcelData.NumberOfCorrect + 2), _ExcelData.NumberOfCorrect + 2 );
+
+                // remove quest value
+                intermediateData.RemoveAt(0);
 
                 // get random 
                 var rand = new Random();
 
                 // then fill answer list random
-                ExcelData.response = intermediateData.OrderBy(sort => rand.Next()).ToList();
+                _ExcelData.response = intermediateData.OrderBy(sort => rand.Next()).ToList();
 
                 // add data of each quest to collection
-                ExcelFileMgr.Add(counter, ExcelData);
+                ExcelFileMgr.Add(counter, _ExcelData);
             }
         }
 
+		// all = 3; (all - not correct) / all
         public void NextQuest(int rowId, Form workspace)
         {
             if (!ExcelFileMgr.ContainsKey(rowId))
@@ -168,7 +179,7 @@ namespace Windows_Tests
                 groupBox1.Text = "Варианты ответов";
                 groupBox1.Visible = true;
 
-                RadioButton[] radio = new RadioButton[count];
+                radio = new RadioButton[count];
 
                 for (int i = 0; i < count; i++)
                 {
@@ -189,7 +200,7 @@ namespace Windows_Tests
             }
             else if (cast == QuestType.Multiple)
             {
-                CheckedListBox multiple = new CheckedListBox();
+                multiple = new CheckedListBox();
                 multiple.Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
                 multiple.Location = new System.Drawing.Point(1, 59);
 
