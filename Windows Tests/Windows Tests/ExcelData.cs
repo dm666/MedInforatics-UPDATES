@@ -28,8 +28,10 @@ namespace Windows_Tests
         private ExcelFile _ExcelData;
 
         public Dictionary<int, ExcelFile> ExcelFileMgr;
-        public CheckedListBox multiple;
+        public ListBox multiple;
         public RadioButton[] radio;
+        public double UltimateResult;
+        public Dictionary<int, double> ResultCollection = new Dictionary<int, double>();
 
         public class ExcelFile
         {
@@ -97,12 +99,8 @@ namespace Windows_Tests
                 }
 
                 _ExcelData.quest = intermediateData[0];
-
-                //get number of correct answer's
-                _ExcelData.NumberOfCorrect = int.Parse(intermediateData[intermediateData.Count - 1]);
-
-                // get quest type 
-                IntQuestType = int.Parse(intermediateData[intermediateData.Count - 2]);
+                IntQuestType = int.Parse(intermediateData[1]);
+                _ExcelData.NumberOfCorrect = int.Parse(intermediateData[2]);
 
                 // convert int type to QuestType
                 switch (IntQuestType)
@@ -119,32 +117,38 @@ namespace Windows_Tests
                 }
 
                 // get index of last correct
-                int LastIndex = intermediateData.Count - 2;
+                int LastIndex = intermediateData.Count - 1;
+                int FirstIndex = intermediateData.Count - _ExcelData.NumberOfCorrect;
 
                 // get correct answer
-                if (_ExcelData.QueType == QuestType.Multiple)
+                if (_ExcelData.QueType == QuestType.Single)
+                    _ExcelData.correct.Add(intermediateData[LastIndex]);
+                else if (_ExcelData.QueType == QuestType.Multiple)
                 {
-                    for (int i = LastIndex - 1; i >= (LastIndex - _ExcelData.NumberOfCorrect); i--)
-                        _ExcelData.correct.Add(intermediateData[i]);
+                    for (int index = LastIndex; index >= FirstIndex; index--)
+                        _ExcelData.correct.Add(intermediateData[index]);
+
                 }
-                else if (_ExcelData.QueType == QuestType.Single) 
-                    _ExcelData.correct.Add(intermediateData[LastIndex - 1]);
 
-                // remove questType, correctedCount and correct answer
-                intermediateData.RemoveRange(intermediateData.Count - (_ExcelData.NumberOfCorrect + 2), _ExcelData.NumberOfCorrect + 2 );
+                intermediateData.RemoveRange(FirstIndex, _ExcelData.NumberOfCorrect);
 
-                // remove quest value
-                intermediateData.RemoveAt(0);
+                intermediateData.RemoveRange(0, 3);        
 
                 // get random 
                 var rand = new Random();
 
                 // then fill answer list random
-                _ExcelData.response = intermediateData.OrderBy(sort => rand.Next()).ToList();
+                _ExcelData.response = intermediateData;//.OrderBy(sort => rand.Next()).ToList();
 
                 // add data of each quest to collection
                 ExcelFileMgr.Add(counter, _ExcelData);
             }
+        }
+
+        public void Loading2(string file)
+        {
+
+            
         }
 
         public string ShowCurrentQuest(int id)
@@ -173,7 +177,7 @@ namespace Windows_Tests
 
             ClearLabel(workspace);
             ClearGroupBox(workspace);
-            ClearCheckedListBox(workspace);
+            ClearListBox(workspace);
             ClearRadioButton(workspace);
 
             int count = ExcelFileMgr[rowId].response.Count;
@@ -222,14 +226,66 @@ namespace Windows_Tests
             }
             else if (cast == QuestType.Multiple)
             {
-                multiple = new CheckedListBox();
+                multiple = new ListBox();
                 multiple.Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
                 multiple.Location = new System.Drawing.Point(1, 59);
+                multiple.SelectionMode = SelectionMode.MultiSimple;
 
                 workspace.Controls.Add(multiple);
             }
 
             workspace.Controls.Add(labelQuest);
+        }
+
+        public void CalculateAmount(int entry)
+        {
+            if (!ExcelFileMgr.ContainsKey(entry))
+                throw new Exception("Not found!");
+
+            int wrong = 0;
+
+            if (ExcelFileMgr[entry].QueType == QuestType.Single)
+            {
+                for (int i = 0; i < radio.Count(); i++)
+                {
+                    if (radio[i].Checked)
+                    {
+                        if (!ExcelFileMgr[entry].correct.Contains(radio[i].Text))
+                            wrong++;
+                    }
+                }
+
+                UltimateResult = ((ExcelFileMgr[entry].correct.Count - wrong) / ExcelFileMgr[entry].correct.Count);
+            }
+            else if (ExcelFileMgr[entry].QueType == QuestType.Multiple)
+            {
+                for (int i = 0; i < multiple.SelectedItems.Count; i++)
+                {
+                    if (!ExcelFileMgr[entry].correct.Contains(multiple.GetItemText(multiple.SelectedItems[i])))
+                        wrong++;
+                }
+
+                UltimateResult = ((ExcelFileMgr[entry].correct.Count - wrong) / ExcelFileMgr[entry].correct.Count);
+            }
+
+            ResultCollection.Add(entry, UltimateResult);
+        }
+
+        public double Result()
+        {
+            double lenght = 0;
+
+            MessageBox.Show(ResultCollection.Count().ToString());
+
+            for (int i = 1; i <= ResultCollection.Count + 1; i++)
+            {
+                if (!ResultCollection.ContainsKey(i))
+                    continue;
+
+                lenght += ResultCollection[i];
+            }
+
+            return lenght / ExcelFileMgr.Count;
         }
 
         private void ClearLabel(Form owner)
@@ -245,11 +301,11 @@ namespace Windows_Tests
 
         }
 
-        private void ClearCheckedListBox(Form owner)
+        private void ClearListBox(Form owner)
         {
             foreach (Control c in owner.Controls)
             {
-                if (c.GetType() == typeof(CheckedListBox))
+                if (c.GetType() == typeof(ListBox))
                 {
                     c.Dispose();
                     owner.Controls.Remove(c);

@@ -19,16 +19,25 @@ namespace Windows_Tests
         public Form1()
         {
             InitializeComponent();
+            data = new ExcelData();
+            data.LoadingQuery(@"C:\users\dm666\desktop\nick.xlsx");
+          //  MessageBox.Show(data.ShowCurrentQuest(3));
+            data.NextQuest(rowId, this);
         }
+
+        ExcelData data;
+        int rowId = 1;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ExcelData data = new ExcelData();
-            data.LoadingQuery(@"C:\users\dm666\desktop\nick.xlsx");
-
-            MessageBox.Show(data.ShowCurrentQuest(1));
-            MessageBox.Show(data.ShowCurrentQuest(2));
-            MessageBox.Show(data.ShowCurrentQuest(3));
+            if (rowId < data.ExcelFileMgr.Count)
+            {
+                data.CalculateAmount(rowId);
+                rowId++;
+                data.NextQuest(rowId, this);
+            }
+            else
+                MessageBox.Show(data.Result().ToString());
         }
     }
 }
