@@ -32,6 +32,7 @@ namespace Windows_Tests
         public RadioButton[] radio;
         public double UltimateResult;
         public Dictionary<int, double> ResultCollection = new Dictionary<int, double>();
+        MainWindow _MainWindow;
 
         public class ExcelFile
         {
@@ -52,6 +53,7 @@ namespace Windows_Tests
 
         public ExcelData()
         {
+            _MainWindow = new MainWindow();
         }
 
         public void LoadingQuestions(TreeView tree)
@@ -98,8 +100,13 @@ namespace Windows_Tests
                     intermediateData.Add(row.Cell(i).Value.ToString());
                 }
 
+                // get quest
                 _ExcelData.quest = intermediateData[0];
+
+                // get quest type
                 IntQuestType = int.Parse(intermediateData[1]);
+
+                // get correct count
                 _ExcelData.NumberOfCorrect = int.Parse(intermediateData[2]);
 
                 // convert int type to QuestType
@@ -118,6 +125,8 @@ namespace Windows_Tests
 
                 // get index of last correct
                 int LastIndex = intermediateData.Count - 1;
+
+                // get index of first correct
                 int FirstIndex = intermediateData.Count - _ExcelData.NumberOfCorrect;
 
                 // get correct answer
@@ -138,17 +147,11 @@ namespace Windows_Tests
                 var rand = new Random();
 
                 // then fill answer list random
-                _ExcelData.response = intermediateData;//.OrderBy(sort => rand.Next()).ToList();
+                _ExcelData.response = intermediateData.OrderBy(sort => rand.Next()).ToList();
 
                 // add data of each quest to collection
                 ExcelFileMgr.Add(counter, _ExcelData);
             }
-        }
-
-        public void Loading2(string file)
-        {
-
-            
         }
 
         public string ShowCurrentQuest(int id)
@@ -175,66 +178,11 @@ namespace Windows_Tests
             if (!ExcelFileMgr.ContainsKey(rowId))
                 throw new Exception("Row not found!");
 
-            ClearLabel(workspace);
-            ClearGroupBox(workspace);
-            ClearListBox(workspace);
-            ClearRadioButton(workspace);
-
-            int count = ExcelFileMgr[rowId].response.Count;
-            QuestType cast = ExcelFileMgr[rowId].QueType;
-
             // main build
             Label labelQuest = new Label();
 
-            labelQuest.Text = ExcelFileMgr[rowId].quest;
-            labelQuest.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            labelQuest.Location = new System.Drawing.Point(0, 0);
-            labelQuest.Name = "labelQuest";
-            labelQuest.Size = new System.Drawing.Size(388, 56);
-            labelQuest.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-
-            if (cast == QuestType.Single)
-            {
-                GroupBox groupBox1 = new GroupBox();
-
-                groupBox1.Location = new System.Drawing.Point(1, 59);
-                groupBox1.Name = "groupBox1";
-                groupBox1.Size = new System.Drawing.Size(386, 121);
-                groupBox1.TabIndex = 1;
-                groupBox1.TabStop = false;
-                groupBox1.Text = "Варианты ответов";
-                groupBox1.Visible = true;
-
-                radio = new RadioButton[count];
-
-                for (int i = 0; i < count; i++)
-                {
-                    radio[i] = new RadioButton();
-
-                    groupBox1.Controls.Add(radio[i]);
-
-                    radio[i].AutoSize = true;
-                    radio[i].Location = new System.Drawing.Point(6, 19 + i * 19);
-                    radio[i].Name = "radioButton" + i.ToString();
-                    radio[i].Size = new System.Drawing.Size(85, 17);
-                    radio[i].TabIndex = 0;
-                    radio[i].TabStop = true;
-                    radio[i].Text = ExcelFileMgr[rowId].response[i];
-                }
-
-                workspace.Controls.Add(groupBox1);
-            }
-            else if (cast == QuestType.Multiple)
-            {
-                multiple = new ListBox();
-                multiple.Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
-                multiple.Location = new System.Drawing.Point(1, 59);
-                multiple.SelectionMode = SelectionMode.MultiSimple;
-
-                workspace.Controls.Add(multiple);
-            }
-
-            workspace.Controls.Add(labelQuest);
+            _MainWindow.label1.Text = ExcelFileMgr[rowId].quest;
+            _MainWindow.listBox1.Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
         }
 
         public void CalculateAmount(int entry)
@@ -243,49 +191,30 @@ namespace Windows_Tests
                 throw new Exception("Not found!");
 
             int wrong = 0;
-
-            if (ExcelFileMgr[entry].QueType == QuestType.Single)
+            for (int i = 0; i < _MainWindow.listBox1.SelectedItems.Count; i++)
             {
-                for (int i = 0; i < radio.Count(); i++)
-                {
-                    if (radio[i].Checked)
-                    {
-                        if (!ExcelFileMgr[entry].correct.Contains(radio[i].Text))
-                            wrong++;
-                    }
-                }
-
-                UltimateResult = ((ExcelFileMgr[entry].correct.Count - wrong) / ExcelFileMgr[entry].correct.Count);
+                if (!ExcelFileMgr[entry].correct.Contains(_MainWindow.listBox1.GetItemText(_MainWindow.listBox1.SelectedItems[i])))
+                    wrong++;
             }
-            else if (ExcelFileMgr[entry].QueType == QuestType.Multiple)
-            {
-                for (int i = 0; i < multiple.SelectedItems.Count; i++)
-                {
-                    if (!ExcelFileMgr[entry].correct.Contains(multiple.GetItemText(multiple.SelectedItems[i])))
-                        wrong++;
-                }
 
-                UltimateResult = ((ExcelFileMgr[entry].correct.Count - wrong) / ExcelFileMgr[entry].correct.Count);
-            }
+            UltimateResult = ((ExcelFileMgr[entry].correct.Count - wrong) / ExcelFileMgr[entry].correct.Count);
 
             ResultCollection.Add(entry, UltimateResult);
         }
 
-        public double Result()
+        public string Result()
         {
             double lenght = 0;
 
-            MessageBox.Show(ResultCollection.Count().ToString());
-
-            for (int i = 1; i <= ResultCollection.Count + 1; i++)
+            for (int i = 1; i <= ResultCollection.Count; i++)
             {
                 if (!ResultCollection.ContainsKey(i))
                     continue;
 
                 lenght += ResultCollection[i];
             }
-
-            return lenght / ExcelFileMgr.Count;
+            double result = lenght / ExcelFileMgr.Count;
+            return string.Format("{0:0.00%}", result);
         }
 
         private void ClearLabel(Form owner)

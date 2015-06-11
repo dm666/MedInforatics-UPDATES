@@ -14,30 +14,28 @@ using ClosedXML.Excel.Misc;
 
 namespace Windows_Tests
 {
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
-        public Form1()
+        public MainWindow()
         {
             InitializeComponent();
             data = new ExcelData();
             data.LoadingQuery(@"C:\users\dm666\desktop\nick.xlsx");
-          //  MessageBox.Show(data.ShowCurrentQuest(3));
-            data.NextQuest(rowId, this);
+            data.NextQuest(1, this);
         }
 
         ExcelData data;
-        int rowId = 1;
+        int rowId = 2;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (rowId < data.ExcelFileMgr.Count)
+            if (rowId <= data.ExcelFileMgr.Count)
             {
-                data.CalculateAmount(rowId);
-                rowId++;
                 data.NextQuest(rowId, this);
+                rowId++;
             }
             else
-                MessageBox.Show(data.Result().ToString());
+                MessageBox.Show(data.Result());
         }
     }
 }
