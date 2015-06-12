@@ -16,12 +16,20 @@ namespace Windows_Tests
         public QuestionList()
         {
             InitializeComponent();
+
+            user = new User();
+            user.Owner = this;
+
             LoadingQuestions();
         }
 
+        public MainWindow _MainWindow;
+        User user;
+        public string message = "";
+
         private void LoadingQuestions()
         {
-            if (Directory.Exists(@""))
+            if (!Directory.Exists(@"Вопросы"))
                 throw new Exception("Директория \"Вопросы\" не существует.");
 
             DirectoryInfo root = new DirectoryInfo(@"Вопросы\");
@@ -35,6 +43,24 @@ namespace Windows_Tests
                 for (int z = 0; z < info.Length; z++)
                     tree.Nodes[i].Nodes.Add(info[z].Name.Substring(0, info[z].Name.Length - Path.GetExtension(info[z].Name).Length));
             }
+        }
+
+        private void QuestionList_DoubleClick(object sender, EventArgs e)
+        {
+            message = string.Format(@"Вопросы\{0}.xlsx", ((TreeView)sender).SelectedNode.FullPath);
+
+            if (File.Exists(message))
+            {
+                user.ShowDialog();
+                this.Hide();
+            }
+            else
+                throw new Exception(string.Format("File {0} not found.", message));
+        }
+
+        private void InitializeQuestionForm(object sender, EventArgs e)
+        {
+            _MainWindow = this.Owner as MainWindow;
         }
     }
 }

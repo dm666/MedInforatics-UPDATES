@@ -28,27 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.SName = new System.Windows.Forms.TextBox();
+            this.Group = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // SName
             // 
-            this.textBox1.Location = new System.Drawing.Point(118, 1);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(140, 20);
-            this.textBox1.TabIndex = 0;
+            this.SName.Location = new System.Drawing.Point(118, 1);
+            this.SName.Name = "SName";
+            this.SName.Size = new System.Drawing.Size(140, 20);
+            this.SName.TabIndex = 0;
             // 
-            // textBox2
+            // Group
             // 
-            this.textBox2.Location = new System.Drawing.Point(118, 27);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(140, 20);
-            this.textBox2.TabIndex = 1;
+            this.Group.Location = new System.Drawing.Point(118, 27);
+            this.Group.Name = "Group";
+            this.Group.Size = new System.Drawing.Size(140, 20);
+            this.Group.TabIndex = 1;
             // 
             // label1
             // 
@@ -78,6 +78,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Начать";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.BeginTest);
             // 
             // button2
             // 
@@ -87,6 +88,7 @@
             this.button2.TabIndex = 5;
             this.button2.Text = "Отмена";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Cancel);
             // 
             // User
             // 
@@ -97,11 +99,13 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.Group);
+            this.Controls.Add(this.SName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "User";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "User";
+            this.Load += new System.EventHandler(this.PrepareUserForm);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,8 +113,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox SName;
+        private System.Windows.Forms.TextBox Group;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;

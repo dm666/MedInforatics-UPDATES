@@ -19,11 +19,6 @@ namespace Windows_Tests
             Multiple,
         }
 
-        private XLWorkbook book;
-        private string Quest, CorrectAnswer;
-        
-        private int CorrectedCount;
-        private List<string> AnswerList;
         private int IntQuestType;
         private ExcelFile _ExcelData;
 
@@ -53,7 +48,7 @@ namespace Windows_Tests
 
         public ExcelData()
         {
-            _MainWindow = new MainWindow();
+            //_MainWindow = new MainWindow();
         }
 
         public void LoadingQuestions(TreeView tree)
@@ -180,20 +175,36 @@ namespace Windows_Tests
 
             // main build
             Label labelQuest = new Label();
+            foreach (Control c in workspace.Controls)
+            {
+                if (c.GetType() == typeof(Label))
+                {
+                    c.Text = ExcelFileMgr[rowId].quest;
+                }
+            }
 
-            _MainWindow.label1.Text = ExcelFileMgr[rowId].quest;
-            _MainWindow.listBox1.Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
+            foreach (Control c in workspace.Controls)
+            {
+                if (c.GetType() == typeof(ListBox))
+                {
+                    ((ListBox)c).Items.Clear();
+                    ((ListBox)c).Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
+                }
+            }
+
+    //        _MainWindow.label1.Text = ExcelFileMgr[rowId].quest;
+    //        _MainWindow.listBox1.Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
         }
 
-        public void CalculateAmount(int entry)
+        public void CalculateAmount(int entry, ListBox listBox1)
         {
             if (!ExcelFileMgr.ContainsKey(entry))
                 throw new Exception("Not found!");
 
             int wrong = 0;
-            for (int i = 0; i < _MainWindow.listBox1.SelectedItems.Count; i++)
+            for (int i = 0; i < listBox1.SelectedItems.Count; i++)
             {
-                if (!ExcelFileMgr[entry].correct.Contains(_MainWindow.listBox1.GetItemText(_MainWindow.listBox1.SelectedItems[i])))
+                if (!ExcelFileMgr[entry].correct.Contains(listBox1.GetItemText(listBox1.SelectedItems[i])))
                     wrong++;
             }
 

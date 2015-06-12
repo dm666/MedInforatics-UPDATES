@@ -19,20 +19,26 @@ namespace Windows_Tests
         public MainWindow()
         {
             InitializeComponent();
-            data = new ExcelData();
-            data.LoadingQuery(@"C:\users\dm666\desktop\nick.xlsx");
-            data.NextQuest(1, this);
+            QuestionList quest = new QuestionList();
+
+            quest.Owner = this;
+            quest.ShowDialog();
+          //  this.Hide();
+
         }
 
-        ExcelData data;
-        int rowId = 2;
+        public ExcelData data = new ExcelData();
+        public int rowId;
+
+        public string StudentName, Group; 
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (rowId <= data.ExcelFileMgr.Count)
+            data.CalculateAmount(rowId, listBox1);
+            if (rowId < data.ExcelFileMgr.Count)
             {
-                data.NextQuest(rowId, this);
                 rowId++;
+                data.NextQuest(rowId, this);
             }
             else
                 MessageBox.Show(data.Result());

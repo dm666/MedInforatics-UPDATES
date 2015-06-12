@@ -16,7 +16,7 @@ namespace Windows_Tests
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new QuestionList());
+            Application.Run(new MainWindow());
         }
     }
 }
