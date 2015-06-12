@@ -19,12 +19,10 @@ namespace Windows_Tests
         public MainWindow()
         {
             InitializeComponent();
-            QuestionList quest = new QuestionList();
 
+            QuestionList quest = new QuestionList();
             quest.Owner = this;
             quest.ShowDialog();
-          //  this.Hide();
-
         }
 
         public ExcelData data = new ExcelData();

@@ -40,21 +40,14 @@ namespace Windows_Tests
                     QL._MainWindow.data.LoadingQuery(QL.message);
                     QL._MainWindow.data.NextQuest(QL._MainWindow.rowId, QL._MainWindow);
                 }
-                else
-                    MessageBox.Show("Сорян");
 
                 this.Close();
-                //  QL.Close();
-                //   QL._MainWindow.Show();
             }
-            else
-                MessageBox.Show("dawd");
         }
 
         private void Cancel(object sender, EventArgs e)
         {
             this.Close();
-          //  QL.ShowDialog();
         }
 
         private void PrepareUserForm(object sender, EventArgs e)

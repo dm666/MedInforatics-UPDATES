@@ -24,10 +24,8 @@ namespace Windows_Tests
 
         public Dictionary<int, ExcelFile> ExcelFileMgr;
         public ListBox multiple;
-        public RadioButton[] radio;
         public double UltimateResult;
         public Dictionary<int, double> ResultCollection = new Dictionary<int, double>();
-        MainWindow _MainWindow;
 
         public class ExcelFile
         {
@@ -44,27 +42,7 @@ namespace Windows_Tests
             public int NumberOfCorrect;
         }
 
-        public QuestType QType;
-
-        public ExcelData()
-        {
-            //_MainWindow = new MainWindow();
-        }
-
-        public void LoadingQuestions(TreeView tree)
-        {
-            DirectoryInfo root = new DirectoryInfo(@"Data\");
-            DirectoryInfo[] files = root.GetDirectories();
-            FileInfo[] info;
-            for (int i = 0; i < files.Length; i++)
-            {
-                tree.Nodes.Add(files[i].Name);
-                info = files[i].GetFiles();
-
-                for (int z = 0; z < info.Length; z++)
-                    tree.Nodes[i].Nodes.Add(info[z].Name.Substring(0, info[z].Name.Length - Path.GetExtension(info[z].Name).Length));
-            }
-        }
+        public ExcelData() { }
 
         public void LoadingQuery(string file)
         {
@@ -149,32 +127,11 @@ namespace Windows_Tests
             }
         }
 
-        public string ShowCurrentQuest(int id)
-        {
-            if (!ExcelFileMgr.ContainsKey(id))
-                return string.Empty;
-
-            string cor = "";
-            string an = "";
-
-            for (int i = 0; i < ExcelFileMgr[id].correct.Count; i++)
-                cor += ", " + ExcelFileMgr[id].correct[i];
-
-            for (int i = 0; i < ExcelFileMgr[id].response.Count; i++)
-                an += ", " + ExcelFileMgr[id].response[i];
-
-            return string.Format("Quest: {0}\r\nType: {1}\r\nCorrectedCount: {2}\r\nCorrect: {3}\r\nAnswers: {4}\r\n",
-                ExcelFileMgr[id].quest, ExcelFileMgr[id].QueType, ExcelFileMgr[id].NumberOfCorrect, cor, an);
-        }
-
-		// all = 3; (all - not correct) / all
         public void NextQuest(int rowId, Form workspace)
         {
             if (!ExcelFileMgr.ContainsKey(rowId))
                 throw new Exception("Row not found!");
 
-            // main build
-            Label labelQuest = new Label();
             foreach (Control c in workspace.Controls)
             {
                 if (c.GetType() == typeof(Label))
@@ -191,9 +148,6 @@ namespace Windows_Tests
                     ((ListBox)c).Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
                 }
             }
-
-    //        _MainWindow.label1.Text = ExcelFileMgr[rowId].quest;
-    //        _MainWindow.listBox1.Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
         }
 
         public void CalculateAmount(int entry, ListBox listBox1)
@@ -227,55 +181,5 @@ namespace Windows_Tests
             double result = lenght / ExcelFileMgr.Count;
             return string.Format("{0:0.00%}", result);
         }
-
-        private void ClearLabel(Form owner)
-        {
-            foreach (Control c in owner.Controls)
-            {
-                if (c.GetType() == typeof(Label))
-                {
-                    c.Dispose();
-                    owner.Controls.Remove(c);
-                }
-            }
-
-        }
-
-        private void ClearListBox(Form owner)
-        {
-            foreach (Control c in owner.Controls)
-            {
-                if (c.GetType() == typeof(ListBox))
-                {
-                    c.Dispose();
-                    owner.Controls.Remove(c);
-                }
-            }
-        }
-
-        private void ClearRadioButton(Form owner)
-        {
-            foreach (Control c in owner.Controls)
-            {
-                if (c.GetType() == typeof(RadioButton))
-                {
-                    c.Dispose();
-                    owner.Controls.Remove(c);
-                }
-            }
-        }
-
-        private void ClearGroupBox(Form owner)
-        {
-            foreach (Control c in owner.Controls)
-            {
-                if (c.GetType() == typeof(GroupBox))
-                {
-                    c.Dispose();
-                    owner.Controls.Remove(c);
-                }
-            }
-        }
-
     }
 }
