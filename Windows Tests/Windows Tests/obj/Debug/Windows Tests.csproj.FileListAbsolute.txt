@@ -12,3 +12,4 @@ D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows
 D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\obj\Debug\Windows_Tests.MainWindow.resources
 D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\obj\Debug\Windows_Tests.QuestionList.resources
 D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\obj\Debug\Windows_Tests.User.resources
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\Windows Tests\obj\Debug\Windows_Tests.ScreenResult.resources

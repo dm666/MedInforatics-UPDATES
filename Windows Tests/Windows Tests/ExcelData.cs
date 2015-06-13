@@ -156,18 +156,42 @@ namespace Windows_Tests
                 throw new Exception("Not found!");
 
             int wrong = 0;
+
             for (int i = 0; i < listBox1.SelectedItems.Count; i++)
             {
                 if (!ExcelFileMgr[entry].correct.Contains(listBox1.GetItemText(listBox1.SelectedItems[i])))
                     wrong++;
             }
-
-            UltimateResult = ((ExcelFileMgr[entry].correct.Count - wrong) / ExcelFileMgr[entry].correct.Count);
+            
+            UltimateResult = (ExcelFileMgr[entry].correct.Count - wrong);
+            UltimateResult /= ExcelFileMgr[entry].correct.Count;
 
             ResultCollection.Add(entry, UltimateResult);
         }
 
-        public string Result()
+        public string GetPercentOfQuestByEntry(int questId)
+        {
+            if (!ExcelFileMgr.ContainsKey(questId))
+                throw new Exception("Not found!");
+
+            return string.Format("{0:0.0%}", ResultCollection[questId]);
+        }
+
+        public void TestResultData(int id, DataGridView dataGrid)
+        {
+            if (!ExcelFileMgr.ContainsKey(id))
+                throw new Exception("Not found!");
+
+            string[] quest = new string[3];
+
+            quest[0] = id.ToString();
+            quest[1] = ExcelFileMgr[id].quest;
+            quest[2] = GetPercentOfQuestByEntry(id);
+
+            dataGrid.Rows.Add(quest);
+        }
+
+        public string AllTestResult()
         {
             double lenght = 0;
 
@@ -179,7 +203,7 @@ namespace Windows_Tests
                 lenght += ResultCollection[i];
             }
             double result = lenght / ExcelFileMgr.Count;
-            return string.Format("{0:0.00%}", result);
+            return string.Format("{0:0.0%}", result);
         }
     }
 }

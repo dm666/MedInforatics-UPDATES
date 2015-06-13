@@ -39,7 +39,11 @@ namespace Windows_Tests
                 data.NextQuest(rowId, this);
             }
             else
-                MessageBox.Show(data.Result());
+            {
+                ScreenResult res = new ScreenResult();
+                res.Owner = this;
+                res.ShowDialog();
+            }
         }
     }
 }
