@@ -157,9 +157,22 @@ namespace Windows_Tests
 
             int wrong = 0;
 
-            for (int i = 0; i < listBox1.SelectedItems.Count; i++)
+            if (ExcelFileMgr[entry].QueType == QuestType.Single)
             {
-                if (!ExcelFileMgr[entry].correct.Contains(listBox1.GetItemText(listBox1.SelectedItems[i])))
+                if (!ExcelFileMgr[entry].correct.Contains(listBox1.GetItemText(listBox1.SelectedItem)))
+                    wrong++;
+            }
+            else if (ExcelFileMgr[entry].QueType == QuestType.Multiple)
+            {
+                if (listBox1.SelectedItems.Count > 1)
+                {
+                    for (int i = 0; i < listBox1.SelectedItems.Count; i++)
+                    {
+                        if (!ExcelFileMgr[entry].correct.Contains(listBox1.GetItemText(listBox1.SelectedItems[i])))
+                            wrong++;
+                    }
+                }
+                else
                     wrong++;
             }
             

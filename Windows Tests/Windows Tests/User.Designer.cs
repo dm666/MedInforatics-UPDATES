@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(User));
             this.SName = new System.Windows.Forms.TextBox();
             this.Group = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -102,9 +103,10 @@
             this.Controls.Add(this.Group);
             this.Controls.Add(this.SName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "User";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "User";
+            this.Text = "Пользователь";
             this.Load += new System.EventHandler(this.PrepareUserForm);
             this.ResumeLayout(false);
             this.PerformLayout();

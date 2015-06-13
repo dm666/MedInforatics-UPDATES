@@ -51,6 +51,9 @@ namespace Windows_Tests
 
             if (File.Exists(message))
             {
+                if (_MainWindow != null)
+                    _MainWindow.Text = ((TreeView)sender).SelectedNode.Text;
+
                 user.ShowDialog();
                 this.Hide();
             }

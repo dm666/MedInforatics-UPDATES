@@ -48,7 +48,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "QuestionList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "QuestionList";
+            this.Text = "Список вопросов";
             this.Load += new System.EventHandler(this.InitializeQuestionForm);
             this.ResumeLayout(false);
 

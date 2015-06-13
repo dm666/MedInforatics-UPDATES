@@ -31,6 +31,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -54,18 +55,30 @@
             // 
             // listBox1
             // 
+            this.listBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 21;
             this.listBox1.Location = new System.Drawing.Point(1, 69);
             this.listBox1.Name = "listBox1";
             this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBox1.Size = new System.Drawing.Size(468, 212);
+            this.listBox1.Size = new System.Drawing.Size(468, 214);
             this.listBox1.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label2.Location = new System.Drawing.Point(2, 284);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(169, 36);
+            this.label2.TabIndex = 2;
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(469, 323);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
@@ -82,6 +95,7 @@
         private System.Windows.Forms.Button button1;
         public System.Windows.Forms.Label label1;
         public System.Windows.Forms.ListBox listBox1;
+        public System.Windows.Forms.Label label2;
     }
 }
 

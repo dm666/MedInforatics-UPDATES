@@ -40,5 +40,10 @@ namespace Windows_Tests
 
             tableOfResult.Rows.Add(id, window.data.ExcelFileMgr[id].quest, window.data.GetPercentOfQuestByEntry(id));
         }
+
+        private void EndTest(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

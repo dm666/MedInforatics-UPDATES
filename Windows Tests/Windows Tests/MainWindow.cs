@@ -37,12 +37,14 @@ namespace Windows_Tests
             {
                 rowId++;
                 data.NextQuest(rowId, this);
+                label2.Text = "Вопрос " + rowId.ToString() + " из " + data.ExcelFileMgr.Count.ToString();
             }
             else
             {
                 ScreenResult res = new ScreenResult();
                 res.Owner = this;
                 res.ShowDialog();
+                this.Hide();
             }
         }
     }

@@ -81,6 +81,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ScreenResult";
             this.Text = "ScreenResult";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EndTest);
             this.Load += new System.EventHandler(this.Loading);
             ((System.ComponentModel.ISupportInitialize)(this.tableOfResult)).EndInit();
             this.ResumeLayout(false);
