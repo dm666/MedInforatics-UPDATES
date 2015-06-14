@@ -85,6 +85,7 @@ namespace Windows_Tests
         {
             timer.Stop();
             label3.Text = "";
+            label3.ForeColor = Color.Black;
             progressBar1.Value = 0;
             
             timer.Start();
@@ -98,21 +99,26 @@ namespace Windows_Tests
             diff = (progressBar1.Maximum - progressBar1.Value) / SECOND;
 
             if (diff > 0)
+            {
+                if (diff < 10)
+                    label3.ForeColor = Color.Red;
+
                 label3.Text = timeleft(diff);
+                progressBar1.Increment(timer.Interval);
+            }
             else
             {
                 label3.Text = "Время вышло.";
                 data.CalculateAmount(rowId, listBox1);
                 if (rowId < data.ExcelFileMgr.Count)
                 {
+                    resetTime();
                     rowId++;
                     data.NextQuest(rowId, this, label1, listBox1);
                 }
                 else
                     Table();
             }
-
-            progressBar1.Increment(timer.Interval);
         }
     }
 }

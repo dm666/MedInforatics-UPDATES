@@ -49,7 +49,6 @@
             this.Name = "QuestionList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список вопросов";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Exit);
             this.Load += new System.EventHandler(this.InitializeQuestionForm);
             this.ResumeLayout(false);
 

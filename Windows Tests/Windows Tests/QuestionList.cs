@@ -64,10 +64,5 @@ namespace Windows_Tests
         {
             _MainWindow = this.Owner as MainWindow;
         }
-
-        private void Exit(object sender, FormClosingEventArgs e)
-        {
-            //Application.Exit();
-        }
     }
 }
