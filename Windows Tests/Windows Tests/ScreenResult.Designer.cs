@@ -39,6 +39,10 @@
             // 
             this.tableOfResult.AllowUserToAddRows = false;
             this.tableOfResult.AllowUserToDeleteRows = false;
+            this.tableOfResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableOfResult.BackgroundColor = System.Drawing.SystemColors.Control;
             this.tableOfResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tableOfResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -47,8 +51,9 @@
             this.tableOfResult.Location = new System.Drawing.Point(0, 0);
             this.tableOfResult.Name = "tableOfResult";
             this.tableOfResult.ReadOnly = true;
-            this.tableOfResult.Size = new System.Drawing.Size(456, 317);
+            this.tableOfResult.Size = new System.Drawing.Size(471, 323);
             this.tableOfResult.TabIndex = 0;
+            this.tableOfResult.Resize += new System.EventHandler(this.tableOfResult_Resize);
             // 
             // Column1
             // 
@@ -76,7 +81,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(456, 317);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(473, 324);
             this.Controls.Add(this.tableOfResult);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ScreenResult";

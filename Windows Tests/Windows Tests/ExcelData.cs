@@ -157,6 +157,12 @@ namespace Windows_Tests
 
             int wrong = 0;
 
+            if (listBox1.SelectedItems.Count < 1)
+            {
+                ResultCollection.Add(entry, 0);
+                return;
+            }
+
             if (ExcelFileMgr[entry].QueType == QuestType.Single)
             {
                 if (!ExcelFileMgr[entry].correct.Contains(listBox1.GetItemText(listBox1.SelectedItem)))

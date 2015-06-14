@@ -43,12 +43,14 @@ namespace Windows_Tests
                 }
 
                 this.Close();
+                QL.Close();
             }
         }
 
         private void Cancel(object sender, EventArgs e)
         {
             this.Close();
+            QL.Show();
         }
 
         private void PrepareUserForm(object sender, EventArgs e)

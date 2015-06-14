@@ -55,7 +55,6 @@ namespace Windows_Tests
                     _MainWindow.Text = ((TreeView)sender).SelectedNode.Text;
 
                 user.ShowDialog();
-                this.Hide();
             }
             else
                 throw new Exception(string.Format("File {0} not found.", message));
@@ -64,6 +63,11 @@ namespace Windows_Tests
         private void InitializeQuestionForm(object sender, EventArgs e)
         {
             _MainWindow = this.Owner as MainWindow;
+        }
+
+        private void Exit(object sender, FormClosingEventArgs e)
+        {
+            //Application.Exit();
         }
     }
 }

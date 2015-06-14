@@ -30,6 +30,11 @@ namespace Windows_Tests
                 tableOfResult.Rows.Add("Итог теста:", window.data.AllTestResult());
 
                 this.Text = "Результаты тестирования — [студент " + window.StudentName + "]";
+
+                tableOfResult.RowHeadersVisible = false;
+                
+                tableOfResult.Height = tableOfResult.Rows.GetRowsHeight(DataGridViewElementStates.Visible) +
+                       tableOfResult.ColumnHeadersHeight + 2;
             }
         }
 
@@ -44,6 +49,11 @@ namespace Windows_Tests
         private void EndTest(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void tableOfResult_Resize(object sender, EventArgs e)
+        {
+            this.Size = new Size(tableOfResult.Size.Width + 17, tableOfResult.Size.Height + 40);
         }
     }
 }
