@@ -38,8 +38,9 @@ namespace Windows_Tests
                 {
                     QL._MainWindow.rowId = 1;
                     QL._MainWindow.data.LoadingQuery(QL.message);
-                    QL._MainWindow.data.NextQuest(QL._MainWindow.rowId, QL._MainWindow);
+                    QL._MainWindow.data.NextQuest(QL._MainWindow.rowId, QL._MainWindow, QL._MainWindow.label1, QL._MainWindow.listBox1);
                     QL._MainWindow.label2.Text = "Вопрос 1 из " + QL._MainWindow.data.ExcelFileMgr.Count.ToString();
+                    QL._MainWindow.timer.Enabled = true;
                 }
 
                 this.Close();

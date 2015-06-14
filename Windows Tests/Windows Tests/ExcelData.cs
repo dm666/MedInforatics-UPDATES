@@ -127,27 +127,14 @@ namespace Windows_Tests
             }
         }
 
-        public void NextQuest(int rowId, Form workspace)
+        public void NextQuest(int rowId, Form workspace, Label LQuest, ListBox ListAnswer)
         {
             if (!ExcelFileMgr.ContainsKey(rowId))
                 throw new Exception("Row not found!");
 
-            foreach (Control c in workspace.Controls)
-            {
-                if (c.GetType() == typeof(Label))
-                {
-                    c.Text = ExcelFileMgr[rowId].quest;
-                }
-            }
-
-            foreach (Control c in workspace.Controls)
-            {
-                if (c.GetType() == typeof(ListBox))
-                {
-                    ((ListBox)c).Items.Clear();
-                    ((ListBox)c).Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
-                }
-            }
+            LQuest.Text = ExcelFileMgr[rowId].quest;
+            ListAnswer.Items.Clear();
+            ListAnswer.Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
         }
 
         public void CalculateAmount(int entry, ListBox listBox1)

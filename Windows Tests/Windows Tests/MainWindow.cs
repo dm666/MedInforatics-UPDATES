@@ -27,6 +27,8 @@ namespace Windows_Tests
 
         public ExcelData data = new ExcelData();
         public int rowId;
+        public int SECOND = 1000;
+        int diff;
 
         public string StudentName, Group; 
 
@@ -35,17 +37,82 @@ namespace Windows_Tests
             data.CalculateAmount(rowId, listBox1);
             if (rowId < data.ExcelFileMgr.Count)
             {
+                resetTime();
                 rowId++;
-                data.NextQuest(rowId, this);
+                data.NextQuest(rowId, this, label1, listBox1);
                 label2.Text = "Вопрос " + rowId.ToString() + " из " + data.ExcelFileMgr.Count.ToString();
             }
             else
+                Table();
+        }
+
+        private void Table()
+        {
+            ScreenResult res = new ScreenResult();
+            res.Owner = this;
+            res.ShowDialog();
+            this.Hide();
+        }
+
+        private string timeleft(int second)
+        {
+            string value = "";
+
+            switch (second % 10)
             {
-                ScreenResult res = new ScreenResult();
-                res.Owner = this;
-                res.ShowDialog();
-                this.Hide();
+                case 1:
+                    value = "секунда";
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                    value = "секунды";
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 0:
+                    value = "секунд";
+                    break;
             }
+
+            return string.Format("Осталось {0} {1}", second, value);
+        }
+
+        private void resetTime()
+        {
+            timer.Stop();
+            label3.Text = "";
+            progressBar1.Value = 0;
+            
+            timer.Start();
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if (progressBar1.Value == progressBar1.Maximum)
+                timer.Enabled = false;
+
+            diff = (progressBar1.Maximum - progressBar1.Value) / SECOND;
+
+            if (diff > 0)
+                label3.Text = timeleft(diff);
+            else
+            {
+                label3.Text = "Время вышло.";
+                data.CalculateAmount(rowId, listBox1);
+                if (rowId < data.ExcelFileMgr.Count)
+                {
+                    rowId++;
+                    data.NextQuest(rowId, this, label1, listBox1);
+                }
+                else
+                    Table();
+            }
+
+            progressBar1.Increment(timer.Interval);
         }
     }
 }
