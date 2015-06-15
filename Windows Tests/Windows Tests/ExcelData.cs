@@ -40,6 +40,7 @@ namespace Windows_Tests
             public QuestType QueType;
             public List<string> response;
             public int NumberOfCorrect;
+            public int time;
         }
 
         public ExcelData() { }
@@ -137,7 +138,7 @@ namespace Windows_Tests
             ListAnswer.Items.AddRange(ExcelFileMgr[rowId].response.ToArray());
         }
 
-        public void CalculateAmount(int entry, ListBox listBox1)
+        public void CalculateAmount(int entry, ListBox listBox1, int diff)
         {
             if (!ExcelFileMgr.ContainsKey(entry))
                 throw new Exception("Not found!");
@@ -173,6 +174,7 @@ namespace Windows_Tests
             UltimateResult /= ExcelFileMgr[entry].correct.Count;
 
             ResultCollection.Add(entry, UltimateResult);
+            ExcelFileMgr[entry].time = ((60 - diff) == 0 ? 1 : (60 - diff));
         }
 
         public string GetPercentOfQuestByEntry(int questId)

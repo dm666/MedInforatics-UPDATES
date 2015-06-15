@@ -43,7 +43,7 @@ namespace Windows_Tests
             if (!window.data.ExcelFileMgr.ContainsKey(id))
                 return;
 
-            tableOfResult.Rows.Add(id, window.data.ExcelFileMgr[id].quest, window.data.GetPercentOfQuestByEntry(id));
+            tableOfResult.Rows.Add(id, window.data.ExcelFileMgr[id].quest, window.data.GetPercentOfQuestByEntry(id), window.data.ExcelFileMgr[id].time);
         }
 
         private void EndTest(object sender, FormClosingEventArgs e)

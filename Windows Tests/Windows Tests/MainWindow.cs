@@ -28,13 +28,13 @@ namespace Windows_Tests
         public ExcelData data = new ExcelData();
         public int rowId;
         public int SECOND = 1000;
-        int diff;
+        public int diff;
 
         public string StudentName, Group; 
 
         private void button1_Click(object sender, EventArgs e)
         {
-            data.CalculateAmount(rowId, listBox1);
+            data.CalculateAmount(rowId, listBox1, diff);
             if (rowId < data.ExcelFileMgr.Count)
             {
                 resetTime();
@@ -48,10 +48,11 @@ namespace Windows_Tests
 
         private void Table()
         {
+            timer.Stop();
+            this.Visible = false;
             ScreenResult res = new ScreenResult();
             res.Owner = this;
             res.ShowDialog();
-            this.Hide();
         }
 
         private string timeleft(int second)
@@ -109,7 +110,7 @@ namespace Windows_Tests
             else
             {
                 label3.Text = "Время вышло.";
-                data.CalculateAmount(rowId, listBox1);
+                data.CalculateAmount(rowId, listBox1, diff);
                 if (rowId < data.ExcelFileMgr.Count)
                 {
                     resetTime();

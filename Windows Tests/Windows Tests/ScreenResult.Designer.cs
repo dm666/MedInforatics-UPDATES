@@ -32,6 +32,7 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.tableOfResult)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,11 +48,12 @@
             this.tableOfResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
-            this.Column3});
+            this.Column3,
+            this.Column4});
             this.tableOfResult.Location = new System.Drawing.Point(0, 0);
             this.tableOfResult.Name = "tableOfResult";
             this.tableOfResult.ReadOnly = true;
-            this.tableOfResult.Size = new System.Drawing.Size(471, 323);
+            this.tableOfResult.Size = new System.Drawing.Size(501, 323);
             this.tableOfResult.TabIndex = 0;
             this.tableOfResult.Resize += new System.EventHandler(this.tableOfResult_Resize);
             // 
@@ -77,12 +79,18 @@
             this.Column3.ReadOnly = true;
             this.Column3.Width = 85;
             // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Время, сек";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
             // ScreenResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(473, 324);
+            this.ClientSize = new System.Drawing.Size(503, 324);
             this.Controls.Add(this.tableOfResult);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ScreenResult";
@@ -100,5 +108,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
     }
 }
