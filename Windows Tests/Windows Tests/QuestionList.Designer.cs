@@ -35,7 +35,7 @@
             // 
             this.tree.Location = new System.Drawing.Point(1, 0);
             this.tree.Name = "tree";
-            this.tree.Size = new System.Drawing.Size(257, 241);
+            this.tree.Size = new System.Drawing.Size(257, 240);
             this.tree.TabIndex = 0;
             this.tree.DoubleClick += new System.EventHandler(this.QuestionList_DoubleClick);
             // 
@@ -49,6 +49,7 @@
             this.Name = "QuestionList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список вопросов";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PrepareClosing);
             this.Load += new System.EventHandler(this.InitializeQuestionForm);
             this.ResumeLayout(false);
 

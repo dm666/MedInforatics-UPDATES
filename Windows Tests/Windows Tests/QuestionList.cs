@@ -25,6 +25,7 @@ namespace Windows_Tests
 
         public MainWindow _MainWindow;
         User user;
+        bool isBegin = false;
         public string message = "";
 
         private void LoadingQuestions()
@@ -47,6 +48,10 @@ namespace Windows_Tests
 
         private void QuestionList_DoubleClick(object sender, EventArgs e)
         {
+            // check for parent
+            if (((TreeView)sender).SelectedNode.LastNode != null)
+                return;
+
             message = string.Format(@"Вопросы\{0}.xlsx", ((TreeView)sender).SelectedNode.FullPath);
 
             if (File.Exists(message))
@@ -54,6 +59,7 @@ namespace Windows_Tests
                 if (_MainWindow != null)
                     _MainWindow.Text = ((TreeView)sender).SelectedNode.Text;
 
+                isBegin = true;
                 user.ShowDialog();
             }
             else
@@ -63,6 +69,12 @@ namespace Windows_Tests
         private void InitializeQuestionForm(object sender, EventArgs e)
         {
             _MainWindow = this.Owner as MainWindow;
+        }
+
+        private void PrepareClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!isBegin)
+                Application.Exit();
         }
     }
 }
