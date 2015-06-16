@@ -27,14 +27,21 @@ namespace Windows_Tests
                 for (int index = 1; index <= window.data.ExcelFileMgr.Count; index++)
                     LoadData(index);
 
-                tableOfResult.Rows.Add("Итог теста:", window.data.AllTestResult());
-
                 this.Text = "Результаты тестирования — [студент " + window.StudentName + "]";
+
+                tableOfResult.Rows.Add("Итог теста:", window.data.AllTestResultDouble());
 
                 tableOfResult.RowHeadersVisible = false;
                 
                 tableOfResult.Height = tableOfResult.Rows.GetRowsHeight(DataGridViewElementStates.Visible) +
                        tableOfResult.ColumnHeadersHeight + 2;
+
+                int i = tableOfResult.Rows.Count - 1;
+
+                if (window.data.Result() >= 0.7)
+                    tableOfResult.Rows[i].Cells[1].Style.ForeColor = Color.Green;
+                else
+                    tableOfResult.Rows[i].Cells[1].Style.ForeColor = Color.Red;             
             }
         }
 

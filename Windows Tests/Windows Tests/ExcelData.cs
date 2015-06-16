@@ -126,6 +126,24 @@ namespace Windows_Tests
                 // add data of each quest to collection
                 ExcelFileMgr.Add(counter, _ExcelData);
             }
+
+            // random sorting
+            ExcelFileMgr = RandomizeDictio(ExcelFileMgr);
+
+        }
+
+        private Dictionary<int, ExcelFile> RandomizeDictio(Dictionary<int, ExcelFile> dict)
+        {
+            var r = new Random();
+
+            for (int i = dict.Count; i > 0; i--)
+            {
+                int j = r.Next(1, i);
+                var t = dict[i];
+                dict[i] = dict[j];
+                dict[j] = t;
+            }
+            return dict;
         }
 
         public void NextQuest(int rowId, Form workspace, Label LQuest, ListBox ListAnswer)
@@ -199,7 +217,7 @@ namespace Windows_Tests
             dataGrid.Rows.Add(quest);
         }
 
-        public string AllTestResult()
+        public double Result()
         {
             double lenght = 0;
 
@@ -211,7 +229,12 @@ namespace Windows_Tests
                 lenght += ResultCollection[i];
             }
             double result = lenght / ExcelFileMgr.Count;
-            return string.Format("{0:0.0%}", result);
+            return result;
+        }
+
+        public string AllTestResultDouble()
+        {
+            return string.Format("{0:0.0%}", Result());
         }
     }
 }

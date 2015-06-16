@@ -63,6 +63,7 @@
             this.Column1.HeaderText = " №";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Column1.Width = 75;
             // 
             // Column2
@@ -77,6 +78,7 @@
             this.Column3.HeaderText = "Проценты, %";
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
+            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Column3.Width = 85;
             // 
             // Column4
@@ -84,6 +86,7 @@
             this.Column4.HeaderText = "Время, сек";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
+            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // ScreenResult
             // 
