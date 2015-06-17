@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>764adf6d-fb3d-4195-9338-0c0cf59bb229</ProjectGuid>
+    <ProjectGuid>{9BC67B53-E57F-40D6-AFAD-EEB531B25251}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSMU_Editor</RootNamespace>
-    <AssemblyName>CSMU_Editor</AssemblyName>
+    <AssemblyName>CSMU Editor</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
