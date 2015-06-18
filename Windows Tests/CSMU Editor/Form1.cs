@@ -16,5 +16,19 @@ namespace CSMU_Editor
         {
             InitializeComponent();
         }
+
+        private void ChangeEvent(object sender, EventArgs e)
+        {
+            EditingTest window = new EditingTest();
+            window.Show();            
+            this.Hide();
+        }
+
+        private void CreateNewTest(object sender, EventArgs e)
+        {
+            CreatingTest window = new CreatingTest();
+            window.Show();
+            this.Hide();
+        }
     }
 }
