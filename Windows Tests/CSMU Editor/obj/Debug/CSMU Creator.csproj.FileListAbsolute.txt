@@ -1,0 +1,10 @@
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\CSMU Editor\obj\Debug\CSMU_Editor.CreatingTest.resources
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\CSMU Editor\obj\Debug\CSMU_Editor.Properties.Resources.resources
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\CSMU Editor\obj\Debug\CSMU Creator.csproj.GenerateResource.Cache
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\CSMU Editor\obj\Debug\CSMU Editor.exe
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\CSMU Editor\bin\Debug\CSMU Editor.exe.config
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\CSMU Editor\bin\Debug\CSMU Editor.exe
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\CSMU Editor\bin\Debug\CSMU Editor.pdb
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\CSMU Editor\bin\Debug\ClosedXML.xml
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\CSMU Editor\obj\Debug\CSMU Editor.pdb
+D:\Nick Files\MedInformatika UPDATED\MedInforatics-UPDATES\Windows Tests\CSMU Editor\obj\Debug\CSMU Creator.csprojResolveAssemblyReference.cache

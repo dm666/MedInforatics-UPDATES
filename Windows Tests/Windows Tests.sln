@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows Tests", "Windows Tests\Windows Tests.csproj", "{8C19EA43-1B15-4FE1-B77D-26FEF6E3EC4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSMU Editor", "CSMU Editor\CSMU Editor.csproj", "{9BC67B53-E57F-40D6-AFAD-EEB531B25251}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSMU Creator", "CSMU Editor\CSMU Creator.csproj", "{9BC67B53-E57F-40D6-AFAD-EEB531B25251}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
