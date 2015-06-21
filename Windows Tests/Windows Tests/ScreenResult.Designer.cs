@@ -96,6 +96,8 @@
             this.ClientSize = new System.Drawing.Size(503, 324);
             this.Controls.Add(this.tableOfResult);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ScreenResult";
             this.Text = "ScreenResult";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EndTest);

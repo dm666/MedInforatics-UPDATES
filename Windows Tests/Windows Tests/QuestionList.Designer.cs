@@ -46,6 +46,8 @@
             this.ClientSize = new System.Drawing.Size(259, 242);
             this.Controls.Add(this.tree);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "QuestionList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список вопросов";
