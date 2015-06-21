@@ -107,13 +107,13 @@ namespace CSMU_Editor
 
             if (questType.SelectedIndex == 1 && chckCount < 2)
             {
-                MessageBox.Show("Должно быть минимум 2 ответа");
+                MessageBox.Show("Должно быть минимум 2 правильных ответа.");
                 return;
             }
 
             if (questType.SelectedIndex == 0 && chckCount > 1)
             {
-                MessageBox.Show("Должен быть 1 ответ");
+                MessageBox.Show("Должен быть 1 ответ.");
                 return;
             }
 
@@ -150,6 +150,51 @@ namespace CSMU_Editor
 
         private void Save(object sender, EventArgs e)
         {
+            if (questBox.Text.Length <= 0)
+            {
+                MessageBox.Show("Добавьте вопрос.");
+                return;
+            }
+
+            if (questType.SelectedIndex == -1)
+            {
+                MessageBox.Show("Выберите тип вопроса.");
+                return;
+            }
+
+            if (dataGridView1.Rows.Count < 2)
+            {
+                MessageBox.Show("Ответов должно быть минимум 2.");
+                return;
+            }
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[1].Value == null)
+                {
+                    MessageBox.Show("Заполните все поля в вариантах ответов.");
+                    return;
+                }
+            }
+
+            if (questType.SelectedIndex == 1 && chckCount < 2)
+            {
+                MessageBox.Show("Должно быть минимум 2 правильных ответа.");
+                return;
+            }
+
+            if (questType.SelectedIndex == 0 && chckCount > 1)
+            {
+                MessageBox.Show("Должен быть 1 ответ.");
+                return;
+            }
+
+            if (testName.Text.Length < 1 || string.IsNullOrWhiteSpace(testName.Text))
+            {
+                MessageBox.Show("Введите название файла.");
+                return;
+            }
+
             if (File.Exists(testName.Text))
             {
                 if (MessageBox.Show("Файл с таким именем существует. Хотите перезаписать?",
