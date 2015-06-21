@@ -63,6 +63,7 @@
             this.questType.Name = "questType";
             this.questType.Size = new System.Drawing.Size(95, 21);
             this.questType.TabIndex = 3;
+            this.questType.SelectedIndexChanged += new System.EventHandler(this.EnableWorkspace);
             // 
             // dataGridView1
             // 
@@ -73,6 +74,7 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
+            this.dataGridView1.Enabled = false;
             this.dataGridView1.Location = new System.Drawing.Point(6, 111);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
@@ -99,6 +101,7 @@
             // 
             // Add
             // 
+            this.Add.Enabled = false;
             this.Add.Location = new System.Drawing.Point(264, 68);
             this.Add.Name = "Add";
             this.Add.Size = new System.Drawing.Size(82, 37);
@@ -109,6 +112,7 @@
             // 
             // Remove
             // 
+            this.Remove.Enabled = false;
             this.Remove.Location = new System.Drawing.Point(361, 68);
             this.Remove.Name = "Remove";
             this.Remove.Size = new System.Drawing.Size(82, 37);
