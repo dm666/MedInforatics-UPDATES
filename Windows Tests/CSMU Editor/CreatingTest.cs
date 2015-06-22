@@ -195,7 +195,7 @@ namespace CSMU_Editor
                 return;
             }
 
-            if (File.Exists(testName.Text))
+            if (File.Exists(testName.Text + ".xlsx"))
             {
                 if (MessageBox.Show("Файл с таким именем существует. Хотите перезаписать?",
                     "Сохранение", MessageBoxButtons.YesNo) == DialogResult.Yes)
