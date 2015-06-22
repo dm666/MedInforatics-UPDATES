@@ -76,7 +76,7 @@ namespace CSMU_Editor
             Remove.Enabled = false;
         }
 
-        private void CNextQuest(object sender, EventArgs e)
+        private void ToNextQuest(object sender, EventArgs e)
         {
             if (questBox.Text.Length <= 0)
             {

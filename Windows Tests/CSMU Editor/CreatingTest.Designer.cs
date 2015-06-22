@@ -157,7 +157,7 @@
             this.Next.TabIndex = 13;
             this.Next.Text = "Далее";
             this.Next.UseVisualStyleBackColor = true;
-            this.Next.Click += new System.EventHandler(this.CNextQuest);
+            this.Next.Click += new System.EventHandler(this.ToNextQuest);
             // 
             // testName
             // 
