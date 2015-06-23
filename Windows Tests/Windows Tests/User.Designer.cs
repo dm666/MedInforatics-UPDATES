@@ -109,6 +109,7 @@
             this.Name = "User";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Пользователь";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UClosing);
             this.Load += new System.EventHandler(this.PrepareUserForm);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -52,11 +52,17 @@ namespace Windows_Tests
         {
             this.Close();
             QL.Show();
+            QL.isBegin = false;
         }
 
         private void PrepareUserForm(object sender, EventArgs e)
         {
             QL = this.Owner as QuestionList;
+        }
+
+        private void UClosing(object sender, FormClosingEventArgs e)
+        {
+            QL.isBegin = false;
         }
     }
 }

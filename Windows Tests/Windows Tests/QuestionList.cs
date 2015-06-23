@@ -25,7 +25,7 @@ namespace Windows_Tests
 
         public MainWindow _MainWindow;
         User user;
-        bool isBegin = false;
+        public bool isBegin = false;
         public string message = "";
 
         private void LoadingQuestions()
@@ -33,16 +33,16 @@ namespace Windows_Tests
             if (!Directory.Exists(@"Вопросы"))
                 throw new Exception("Директория \"Вопросы\" не существует.");
 
-            DirectoryInfo root = new DirectoryInfo(@"Вопросы\");
-            DirectoryInfo[] files = root.GetDirectories();
-            FileInfo[] info;
-            for (int i = 0; i < files.Length; i++)
-            {
-                tree.Nodes.Add(files[i].Name);
-                info = files[i].GetFiles();
+            string[] root = Directory.GetDirectories(@"Вопросы\");
+            string[] files = new string[root.Length];
 
-                for (int z = 0; z < info.Length; z++)
-                    tree.Nodes[i].Nodes.Add(info[z].Name.Substring(0, info[z].Name.Length - Path.GetExtension(info[z].Name).Length));
+            for (int i = 0; i < root.Length; i++)
+            {
+                tree.Nodes.Add(root[i].Remove(0, 8));
+                files = Directory.GetFileSystemEntries(root[i], "*.xlsx", SearchOption.AllDirectories);
+
+                for (int ix = 0; ix < files.Length; ix++)
+                    tree.Nodes[i].Nodes.Add(Path.GetFileNameWithoutExtension(files[ix]));
             }
         }
 
