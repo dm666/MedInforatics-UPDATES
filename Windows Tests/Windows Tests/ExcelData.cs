@@ -115,7 +115,14 @@ namespace Windows_Tests
 
                 intermediateData.RemoveRange(FirstIndex, _ExcelData.NumberOfCorrect);
 
-                intermediateData.RemoveRange(0, 3);        
+                intermediateData.RemoveRange(0, 3);
+
+                // check for error's
+                if (ErrorLog(counter, IntQuestType, _ExcelData.NumberOfCorrect))
+                {
+                    MessageBox.Show("В загрузке данного теста произошло ошибка. Обратитесь к администратору");
+                    Application.Exit();
+                }
 
                 // get random 
                 var rand = new Random();
@@ -130,6 +137,41 @@ namespace Windows_Tests
             // random sorting
             ExcelFileMgr = RandomizeDictio(ExcelFileMgr);
 
+        }
+
+        private bool ErrorLog(int id, int type, int count)
+        {
+            using (StreamWriter wr = File.AppendText("ErrorLog.txt"))
+            {
+                //wr.WriteLine(DateTime.Now);
+
+                if (type > 2 || type < 1)
+                {
+                    wr.WriteLine(DateTime.Now);
+                    wr.WriteLine("Вопрос № {0} содержит некорректный тип.", id);
+                    return true;
+                }
+                else if (type == 1 && count > 1)
+                {
+                    wr.WriteLine(DateTime.Now);
+                    wr.WriteLine("Вопрос № {0} не должен превышать 1-го ответа.", id);
+                    return true;
+                }
+                else if (type == 1 && count < 1)
+                {
+                    wr.WriteLine(DateTime.Now);
+                    wr.WriteLine("Вопрос № {0}: не указано количество правильных ответов.", id);
+                    return true;
+                }
+                else if (type == 2 && count < 2)
+                {
+                    wr.WriteLine(DateTime.Now);
+                    wr.WriteLine("Вопрос № {0} должен содержать минимум 2 ответа.", id);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private Dictionary<int, ExcelFile> RandomizeDictio(Dictionary<int, ExcelFile> dict)
