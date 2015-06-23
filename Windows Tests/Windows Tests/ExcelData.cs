@@ -184,10 +184,23 @@ namespace Windows_Tests
                             wrong++;
                     }
                 }
-                else
-                    wrong++;
+
+                if (listBox1.SelectedItems.Count == 1)
+                {
+                    if (!ExcelFileMgr[entry].correct.Contains(listBox1.GetItemText(listBox1.SelectedItem.ToString())))
+                        wrong = ExcelFileMgr[entry].correct.Count;
+                }
+
+                if (listBox1.SelectedItems.Count == ExcelFileMgr[entry].response.Count)
+                {
+                    ResultCollection.Add(entry, 0);
+                    return;
+                }
+
+                if (listBox1.SelectedItems.Count == wrong)
+                    wrong = ExcelFileMgr[entry].correct.Count;
             }
-            
+
             UltimateResult = (ExcelFileMgr[entry].correct.Count - wrong);
             UltimateResult /= ExcelFileMgr[entry].correct.Count;
 

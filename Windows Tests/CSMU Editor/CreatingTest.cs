@@ -71,7 +71,6 @@ namespace CSMU_Editor
 
             questBox.Text = string.Empty;
             questType.SelectedIndex = -1;
-            questType.Enabled = false;
             Add.Enabled = false;
             Remove.Enabled = false;
         }
